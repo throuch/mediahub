@@ -7,7 +7,7 @@ import canalplus.rps.application.actors.ClassicGameActor
 
 object MediaHubApp extends App with GameApplicationMixing {
 
-  implicit val system = ActorSystem("GameSystem")
+  implicit val system = ActorSystem("MediaSystem")
   implicit val instance = this
 
   sys.addShutdownHook(system.terminate())

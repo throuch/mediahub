@@ -2,8 +2,8 @@ package canalplus.mediahub.application.service
 
 import java.time.LocalDate
 
-import canalplus.core.interfaces.PlayerType.{Computer, Human}
-import canalplus.core.interfaces.{GameConfiguration, MatchID, PlayerID}
+import thorn.core.interfaces.PlayerType.{Computer, Human}
+import thorn.core.interfaces.{GameConfiguration, MatchID, PlayerID}
 import canalplus.mediahub.interfaces.GameService
 
 trait BasicFeatures {

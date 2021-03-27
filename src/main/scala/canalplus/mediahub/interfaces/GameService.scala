@@ -2,7 +2,7 @@ package canalplus.mediahub.interfaces
 
 import java.time.LocalDate
 
-import canalplus.core.interfaces._
+import thorn.core.interfaces._
 
 /**
  *

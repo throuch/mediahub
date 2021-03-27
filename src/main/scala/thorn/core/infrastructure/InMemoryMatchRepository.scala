@@ -1,8 +1,8 @@
-package canalplus.core.infrastructure
+package thorn.core.infrastructure
 
 
-import canalplus.core.domain.repositories.{MatchObjectValue, MatchRepository, ScoreRecord}
-import canalplus.core.interfaces.MatchID
+import thorn.core.domain.repositories.{MatchObjectValue, MatchRepository, ScoreRecord}
+import thorn.core.interfaces.MatchID
 
 import scala.collection.mutable
 

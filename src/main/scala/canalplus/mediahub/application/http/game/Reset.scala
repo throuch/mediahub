@@ -1,7 +1,7 @@
 package canalplus.mediahub.application.http.game
 
 import akka.http.scaladsl.model.StatusCodes
-import canalplus.core.application.http.HttpCommon
+import thorn.core.application.http.HttpCommon
 import canalplus.mediahub.application.injection.GameApplicationMixing
 import canalplus.mediahub.interfaces.swagger.game.GameAPI
 

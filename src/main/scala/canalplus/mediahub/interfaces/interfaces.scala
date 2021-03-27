@@ -1,4 +1,4 @@
-package canalplus.core
+package canalplus.mediahub
 
 import java.util.UUID
 

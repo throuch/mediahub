@@ -1,4 +1,4 @@
-package canalplus.core.application
+package thorn.core.application
 
 import canalplus.rps.domain.{ClassicElement, Paper, Rock, Scissors}
 import canalplus.rps.interfaces.RPSElement

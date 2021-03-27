@@ -1,12 +1,12 @@
-package canalplus.core.application.service
+package thorn.core.application.service
 
 import java.time.LocalDate
 
-import canalplus.core.domain.entities.{HumanPlayer, Match}
-import canalplus.core.domain.repositories.{MatchObjectValue, MatchRepository, PlayerRepository, ScoreRecord}
-import canalplus.core.infrastructure.InfraConverter
-import canalplus.core.interfaces.PlayerType._
-import canalplus.core.interfaces.{GameConfiguration, MatchID, PlayerID}
+import thorn.core.domain.entities.{HumanPlayer, Match}
+import thorn.core.domain.repositories.{MatchObjectValue, MatchRepository, PlayerRepository, ScoreRecord}
+import thorn.core.infrastructure.InfraConverter
+import thorn.core.interfaces.PlayerType._
+import thorn.core.interfaces.{GameConfiguration, MatchID, PlayerID}
 
 
 trait MatchService {

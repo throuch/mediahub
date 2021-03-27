@@ -1,6 +1,6 @@
-package canalplus.core.domain.repositories
+package thorn.core.domain.repositories
 
-import canalplus.core.interfaces.{MatchID, PlayerID}
+import thorn.core.interfaces.{MatchID, PlayerID}
 
 
 case class ScoreRecord(matchId: MatchID, computerScore: Int = 0, humanScore: Int = 0)

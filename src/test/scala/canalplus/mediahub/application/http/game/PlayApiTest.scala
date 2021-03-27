@@ -5,7 +5,7 @@ import akka.http.scaladsl.server.Directives.{complete, _}
 import akka.http.scaladsl.server.{RejectionHandler, Route, _}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.util.ByteString
-import canalplus.core.interfaces.MatchID
+import thorn.core.interfaces.MatchID
 import canalplus.mediahub.application.injection.GameApplicationMixing
 import canalplus.mediahub.interfaces.swagger.converter.JsonSupport
 import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}

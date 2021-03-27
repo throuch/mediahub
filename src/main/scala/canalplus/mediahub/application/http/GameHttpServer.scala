@@ -8,7 +8,7 @@ import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.{MalformedRequestContentRejection, RejectionHandler, Route}
 import akka.stream.ActorMaterializer
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
-import canalplus.core.application.http.common.{Ping, Site, Status}
+import thorn.core.application.http.common.{Ping, Site, Status}
 import canalplus.mediahub.application.http.game.{GetResults, Play, Reset}
 import canalplus.mediahub.application.injection.GameApplicationMixing
 import canalplus.mediahub.interfaces.swagger.SwaggerDocService

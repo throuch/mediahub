@@ -1,7 +1,7 @@
-package canalplus.core.infrastructure
+package thorn.core.infrastructure
 
-import canalplus.core.domain.entities.Match
-import canalplus.core.domain.repositories.MatchObjectValue
+import thorn.core.domain.entities.Match
+import thorn.core.domain.repositories.MatchObjectValue
 
 object InfraConverter {
 

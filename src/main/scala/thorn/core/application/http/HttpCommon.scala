@@ -1,4 +1,4 @@
-package canalplus.core.application.http
+package thorn.core.application.http
 
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives

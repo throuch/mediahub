@@ -3,7 +3,7 @@ package canalplus.mediahub.application.http.game
 import akka.actor.ActorRef
 import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.pattern.ask
-import canalplus.core.application.http.HttpCommon
+import thorn.core.application.http.HttpCommon
 import canalplus.mediahub.application.injection.GameApplicationMixing
 import canalplus.mediahub.interfaces.swagger.converter.JsonSupport
 import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}

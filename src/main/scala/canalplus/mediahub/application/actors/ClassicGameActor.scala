@@ -1,9 +1,9 @@
 package canalplus.mediahub.application.actors
 
 import akka.actor.{Actor, ActorLogging, Props}
-import canalplus.core.application.DomainConverter
-import canalplus.core.application.service.MatchService
-import canalplus.core.interfaces.MatchID
+import thorn.core.application.DomainConverter
+import thorn.core.application.service.MatchService
+import thorn.core.interfaces.MatchID
 import canalplus.mediahub.application.injection.ComputerAI
 import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}
 import canalplus.rps.domain.ClassicGame
@@ -19,9 +19,6 @@ import scala.collection.mutable
  */
 class ClassicGameActor(appContext: MatchService with ComputerAI) extends Actor with ActorLogging {
 
-
-  // this is just a cache it is STATELESS !
-  val games: mutable.Map[MatchID, ClassicGame] = new mutable.HashMap[MatchID, ClassicGame]()
 
   override def receive: Receive = {
     case (matchId: MatchID, body: GameAction) =>

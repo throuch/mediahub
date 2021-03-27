@@ -9,7 +9,7 @@ import akka.http.scaladsl.server.{MalformedRequestContentRejection, RejectionHan
 import akka.stream.ActorMaterializer
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 import thorn.core.application.http.common.{Ping, Site, Status}
-import canalplus.mediahub.application.http.game.{GetResults, Play, Reset}
+import canalplus.mediahub.application.http.movie.{GetResults, Play, Reset}
 import canalplus.mediahub.application.injection.GameApplicationMixing
 import canalplus.mediahub.interfaces.swagger.SwaggerDocService
 import org.slf4j.LoggerFactory
@@ -43,9 +43,9 @@ class GameHttpServer(game: ActorRef)(implicit system: ActorSystem, appContext: G
         SwaggerDocService.routes ~
           new Ping().route ~
           new Status().route ~
-          new Play(game).route ~
-          new GetResults().route ~
-          new Reset().route ~
+          new Play2(game).route ~
+
+
           site)
     )
 

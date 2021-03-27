@@ -3,7 +3,7 @@ package canalplus.mediahub.interfaces.swagger
 import com.github.swagger.akka.SwaggerHttpService
 import com.github.swagger.akka.model.{Contact, Info, License}
 import com.typesafe.config.ConfigFactory
-import canalplus.mediahub.interfaces.swagger.game.GameAPI
+import canalplus.mediahub.interfaces.swagger.game.MovieAPI
 
 object SwaggerDocService extends SwaggerHttpService {
   val config = ConfigFactory.load()
@@ -12,7 +12,7 @@ object SwaggerDocService extends SwaggerHttpService {
   override val apiClasses: Set[Class[_]] = Set(
     classOf[Ping],
     classOf[Status],
-    classOf[GameAPI]
+    classOf[MovieAPI]
   )
   override val host = config.getString("swagger.api.host") //the url of your api, not swagger's json endpoint
   override val basePath = config.getString("swagger.api.base.path")

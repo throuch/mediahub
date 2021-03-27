@@ -1,4 +1,4 @@
-package canalplus.mediahub.application.http.game
+package canalplus.mediahub.application.http.movie
 
 import akka.http.scaladsl.model._
 import akka.http.scaladsl.server.Directives.{complete, _}

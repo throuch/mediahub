@@ -5,6 +5,7 @@ import thorn.core.application.DomainConverter
 import thorn.core.application.service.MatchService
 import thorn.core.interfaces.MatchID
 import canalplus.mediahub.application.injection.ComputerAI
+import canalplus.mediahub.application.service.MovieService
 import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}
 import canalplus.rps.domain.ClassicGame
 import canalplus.rps.infrastructure.InMemoryGameRecorder
@@ -17,7 +18,7 @@ import scala.collection.mutable
  *
  *
  */
-class ClassicGameActor(appContext: MatchService with ComputerAI) extends Actor with ActorLogging {
+class MediaHubActor(appContext: MovieService) extends Actor with ActorLogging {
 
 
   override def receive: Receive = {
@@ -26,25 +27,7 @@ class ClassicGameActor(appContext: MatchService with ComputerAI) extends Actor w
     case msg ⇒ log.warning(s"DEBUG: unrecognized message $msg")
   }
 
-  def createClassicGame(matchId: MatchID): ClassicGame = {
-    val `match` = appContext.read(matchId)
-    val game = new ClassicGame(`match`, InMemoryGameRecorder, appContext.defaultGameStrategy)
-    if (!`match`.isMatchReadyToStart)
-      throw new IllegalStateException
-    game
-  }
 
-  def getGameReference(matchId: MatchID): ClassicGame = {
-    games.getOrElseUpdate(matchId, createClassicGame(matchId))
-  }
-
-  def formatMatchResult(
-                         computerElement: RPSElement,
-                         humanElement: RPSElement,
-                         humanResultWin: Boolean): String = {
-    val result = if (humanResultWin) "win" else "lose"
-    s"You played $humanElement, I played $computerElement, you $result"
-  }
 
   def onHumanAction(game: ClassicGame, action: GameAction): GameActionResponse = {
 
@@ -60,8 +43,8 @@ class ClassicGameActor(appContext: MatchService with ComputerAI) extends Actor w
 
 }
 
-object ClassicGameActor {
-  def props(appContext: MatchService with ComputerAI): Props =
-    Props(new ClassicGameActor(appContext))
+object MediaHubActor {
+  def props(appContext: MovieService): Props =
+    Props(new MediaHubActor(appContext))
 
 }

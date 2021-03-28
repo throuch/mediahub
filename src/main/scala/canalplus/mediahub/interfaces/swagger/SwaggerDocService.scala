@@ -3,7 +3,7 @@ package canalplus.mediahub.interfaces.swagger
 import com.github.swagger.akka.SwaggerHttpService
 import com.github.swagger.akka.model.{Contact, Info, License}
 import com.typesafe.config.ConfigFactory
-import canalplus.mediahub.interfaces.swagger.game.MovieAPI
+import canalplus.mediahub.interfaces.swagger.mediahub.MovieAPI
 
 object SwaggerDocService extends SwaggerHttpService {
   val config = ConfigFactory.load()

@@ -11,7 +11,7 @@ ThisBuild / organizationName := "canalplus"
 lazy val root = (project in file("."))
   .settings(
     name := "MediaHubDemo",
-    fork := true,
+    //fork := true,
     javaOptions := Seq("-DADVERTISED_PORT=9000", "-DADVERTISED_HOST=localhost"),
     libraryDependencies ++= commonDependencies ++ swaggerDependencies ++ akkaDependencies,
     resolvers ++= Seq(

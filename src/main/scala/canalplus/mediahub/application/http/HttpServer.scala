@@ -7,6 +7,7 @@ import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
 import akka.http.scaladsl.server.{MalformedRequestContentRejection, RejectionHandler, Route}
 import akka.stream.ActorMaterializer
+import canalplus.mediahub.application.http.movie.MoviePrincipals
 import canalplus.mediahub.application.injection.Module
 import canalplus.mediahub.interfaces.swagger.SwaggerDocService
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
@@ -16,7 +17,7 @@ import thorn.core.application.http.common.{Ping, Site, Status}
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-class HttpServer(mediaActor: ActorRef)(implicit system: ActorSystem, appContext: Module) extends Site {
+class HttpServer(implicit system: ActorSystem, appContext: Module) extends Site {
   val log = LoggerFactory.getLogger(getClass)
 
   implicit def myRejectionHandler =
@@ -42,9 +43,7 @@ class HttpServer(mediaActor: ActorRef)(implicit system: ActorSystem, appContext:
         SwaggerDocService.routes ~
           new Ping().route ~
           new Status().route ~
-          new MoviePrincipals(mediaActor).route ~
-
-
+          new MoviePrincipals(appContext).route ~
           site)
     )
 

@@ -3,7 +3,6 @@ package canalplus.mediahub.application
 import akka.actor.ActorSystem
 import canalplus.mediahub.application.http.HttpServer
 import canalplus.mediahub.application.injection.Module
-import canalplus.rps.application.actors.ClassicGameActor
 
 object MediaHubApp extends App with Module {
 
@@ -12,9 +11,9 @@ object MediaHubApp extends App with Module {
 
   sys.addShutdownHook(system.terminate())
 
-  val gameActorRef = system.actorOf(ClassicGameActor.props(instance), "GameActor")
+  //val gameActorRef = system.actorOf(ClassicGameActor.props(instance), "GameActor")
 
-  new HttpServer(gameActorRef)
+  new HttpServer
 
 
 }

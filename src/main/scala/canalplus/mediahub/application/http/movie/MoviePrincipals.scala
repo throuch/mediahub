@@ -1,30 +1,32 @@
 package canalplus.mediahub.application.http.movie
 
 import akka.actor.ActorRef
-import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
+import akka.http.scaladsl.model.{ContentTypes, HttpEntity, HttpResponse, StatusCodes}
+import akka.util.ByteString
+import canalplus.mediahub.application.service.MovieService
 import canalplus.mediahub.interfaces.swagger.converter.JsonSupport
 import thorn.core.application.http.HttpCommon
 
 import scala.concurrent.ExecutionContext
 
-class MoviePrincipals(mediaActor: ActorRef)
+class MoviePrincipals(movieService: MovieService)
                      (implicit val ec: ExecutionContext) extends HttpCommon  {
 
-  val route = play
+  val route =
+    path("principalsForMovieName" / Segment) {
 
-  def play =
-    path("principalsForMovieName" / String) {
-      name ⇒
+      movieName : String =>
         get {
-            movieName=>
 
-            complete {
-              (mediaActor ? GetPrincipals(movieName)).mapTo[Seq[Principal]].map(_.fromDomain).
-                map(message ⇒ HttpResponse(StatusCodes.OK,
-                  entity = message))
-            }
-          }
+          complete(
+            HttpEntity(
+              ContentTypes.`text/plain(UTF-8)`,
+              // transform each number to a chunk of bytes
+              movieService.principalsForMovieName(movieName).map(n => ByteString(s"$n\n"))
+            )
+          )
         }
     }
+
 }
 

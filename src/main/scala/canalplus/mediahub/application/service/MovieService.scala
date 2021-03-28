@@ -5,9 +5,9 @@ import canalplus.mediahub.domain.entities.MovieService.{Principal, TvSeries}
 
 
 trait MovieService {
-  def principalsForMovieNameStream(name: String): Source[Principal, _]
+  def principalsForMovieName(name: String): Source[Principal, _]
 
-  def tvSeriesWithGreatestNumberOfEpisodesStream(): Source[TvSeries, _]
+  def tvSeriesWithGreatestNumberOfEpisodes(): Source[TvSeries, _]
 
   //def asyncPrincipalsForMovieName(name: String): Future[Seq[Principal]]
 

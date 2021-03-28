@@ -1,4 +1,4 @@
-package canalplus.mediahub.interfaces.swagger.game
+package canalplus.mediahub.interfaces.swagger.mediahub
 
 
 import akka.http.scaladsl.server.Route
@@ -19,7 +19,8 @@ trait MovieAPI {
     httpMethod = "GET",
     //consumes = "application/json",
     produces = "text/plain",
-    response = classOf[Principal])
+    response = classOf[Principal]
+  )
   @ApiResponses(Array(
     new ApiResponse(code = 200, message = "OK")))
   def route1: Route = complete("empty")
@@ -31,7 +32,8 @@ trait MovieAPI {
     httpMethod = "GET",
     //consumes = "application/json",
     produces = "text/plain",
-    response = classOf[TvSeries])
+    //response = classOf[TvSeries]
+  )
   @ApiResponses(Array(
     new ApiResponse(code = 200, message = "OK")))
   def route2: Route = complete("empty")

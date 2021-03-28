@@ -1,4 +1,4 @@
-package canalplus.mediahub.application.service
+package fr.thorn
 
 abstract class UnitSpec {
 

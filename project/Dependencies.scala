@@ -7,6 +7,7 @@ object Dependencies {
     "org.scalactic" %% "scalactic" % "3.0.5" % Test,
     "org.scalatest" %% "scalatest" % "3.0.5" % Test,
     // "org.json4s" %% "json4s-jackson" % "3.6.7",
+    "com.typesafe.scala-logging" %% "scala-logging" % "3.9.3",
     "ch.qos.logback" % "logback-classic" % "1.2.3",
     "ch.qos.logback" % "logback-core" % "1.2.3"
 

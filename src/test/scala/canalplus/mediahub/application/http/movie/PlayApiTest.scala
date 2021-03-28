@@ -6,7 +6,7 @@ import akka.http.scaladsl.server.{RejectionHandler, Route, _}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import akka.util.ByteString
 import thorn.core.interfaces.MatchID
-import canalplus.mediahub.application.injection.GameApplicationMixing
+import canalplus.mediahub.application.injection.Module
 import canalplus.mediahub.interfaces.swagger.converter.JsonSupport
 import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}
 import canalplus.rps.application.actors.ClassicGameActor
@@ -50,7 +50,7 @@ class PlayApiTest extends WordSpec with Matchers with ScalatestRouteTest with Js
     )
 
 
-  implicit val instance = new GameApplicationMixing {
+  implicit val instance = new Module {
 
     override val defaultGameStrategy: AIStrategy = new AIStrategy {
       override def getHand(matchId: MatchID): ClassicElement = Paper

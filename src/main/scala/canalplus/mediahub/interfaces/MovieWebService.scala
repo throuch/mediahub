@@ -1,5 +1,6 @@
 package canalplus.mediahub.interfaces
 
+import canalplus.mediahub.interfaces.swagger.model.{Principal, TvSeries}
 
 
 trait MovieWebService {

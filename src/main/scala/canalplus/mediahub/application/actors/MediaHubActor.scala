@@ -1,50 +1,42 @@
 package canalplus.mediahub.application.actors
 
 import akka.actor.{Actor, ActorLogging, Props}
-import thorn.core.application.DomainConverter
-import thorn.core.application.service.MatchService
-import thorn.core.interfaces.MatchID
-import canalplus.mediahub.application.injection.ComputerAI
+import akka.stream.scaladsl.Sink
 import canalplus.mediahub.application.service.MovieService
-import canalplus.mediahub.interfaces.swagger.model.{GameAction, GameActionResponse}
-import canalplus.rps.domain.ClassicGame
-import canalplus.rps.infrastructure.InMemoryGameRecorder
-import canalplus.rps.interfaces.RPSElement.RPSElement
-
-import scala.collection.mutable
+import canalplus.mediahub.domain.entities.MovieService.{Principal, TvSeries}
 
 
 /**
  *
  *
  */
-class MediaHubActor(appContext: MovieService) extends Actor with ActorLogging {
-
+class MediaHubActor(movieService: MovieService) extends Actor with ActorLogging {
+  import MediaHubActor._
 
   override def receive: Receive = {
-    case (matchId: MatchID, body: GameAction) =>
-      sender() ! onHumanAction(getGameReference(matchId), body)
+    case GetPrincipals(movieName) =>
+      sender() ! process(movieName)
+    case GetTopTenSeriesEpisodesCount =>
+      sender() ! process2()
     case msg ⇒ log.warning(s"DEBUG: unrecognized message $msg")
   }
 
+  def process(movieName: String): Seq[Principal] = {
+    movieService.principalsForMovieNameStream(movieName)...
 
-
-  def onHumanAction(game: ClassicGame, action: GameAction): GameActionResponse = {
-
-    val (humanHand, computerHand, _, humanResultWin) =
-      game.playRound(DomainConverter.toDomain(action.myHand))
-
-    GameActionResponse(humanResultWin,
-      formatMatchResult(DomainConverter.toApi(computerHand),
-        DomainConverter.toApi(humanHand),
-        humanResultWin))
-
+    runWith(Sink.Seq)
   }
 
+  def process2(): Seq[TvSeries] = {
+    ???
+  }
 }
 
 object MediaHubActor {
   def props(appContext: MovieService): Props =
     Props(new MediaHubActor(appContext))
 
+  case class GetPrincipals(movieName: String)
+
+  case object GetTopTenSeriesEpisodesCount
 }

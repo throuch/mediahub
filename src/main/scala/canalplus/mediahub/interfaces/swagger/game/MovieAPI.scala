@@ -14,10 +14,10 @@ import javax.ws.rs.Path
 trait MovieAPI {
   @Path("principalsForMovieName")
   @ApiOperation(
-    value = "...",
-    nickname = "",
+    value = "A partir du nom d'un titre, retourne l'ensemble des membres de l’équipe de tournage",
+    //nickname = "",
     httpMethod = "GET",
-    consumes = "application/json",
+    //consumes = "application/json",
     produces = "text/plain",
     response = classOf[Principal])
   @ApiResponses(Array(
@@ -26,16 +26,14 @@ trait MovieAPI {
 
   @Path("tvSeriesWithGreatestNumberOfEpisodes")
   @ApiOperation(
-    value = "...",
-    nickname = "",
+    value = "retourne le titre des 10 séries avec le plus grand nombre d'épisodes",
+    //nickname = "",
     httpMethod = "GET",
-    consumes = "application/json",
+    //consumes = "application/json",
     produces = "text/plain",
     response = classOf[TvSeries])
   @ApiResponses(Array(
     new ApiResponse(code = 200, message = "OK")))
   def route2: Route = complete("empty")
-
-
 
 }

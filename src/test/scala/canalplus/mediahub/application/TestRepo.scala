@@ -11,7 +11,12 @@ class TestRepo extends WordSpec with Matchers {
   "Repository" should {
     "load data" in {
 
-      RepoTVInstance.parseEpisodes()
+      val it = RepoTVInstance.parseEpisodes()
+
+      it.foreach( _ ⇒ ())
+//      while( it.hasNext) {
+//        it.next()
+//      }
     }
   }
 
@@ -19,7 +24,7 @@ class TestRepo extends WordSpec with Matchers {
   "Repository" should {
     "load title principals" in {
 
-      RepoInstance.parseTitlePrincipals()
+      RepoInstance.parseNameBasics().foreach( _ ⇒ ())
     }
   }
 

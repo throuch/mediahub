@@ -13,12 +13,13 @@ trait MovieServiceImpl extends MovieService {
 
   override def principalsForMovieName(name: String): Source[MovieService.Principal, _] = {
     // TODO filter by movieName, combine
-    getTitlePrincipalsRawStream.filter(t=> t._5.contains(name)).map(t => MovieService.Principal(t._1, t._2, t._3,t._4 ))
+    getTitlePrincipalsRawStream.filter(t=> t.knownForTitles.contains(name)).map(t =>
+      MovieService.Principal(t.primaryName, t.birthYear, t.deathYear, t.primaryProfession ))
   }
 
   override def tvSeriesWithGreatestNumberOfEpisodes(): Source[MovieService.TvSeries, _] = {
     // TODO groupby (parentTconst, season) => max by episode_num => SUM
 
-    getEpisodesRawStream.map( x=> TvSeries(x._2,1234,None,List()))
+    getEpisodesRawStream.map( x=> TvSeries(x.parentTconst,1234,None,List()))
   }
 }

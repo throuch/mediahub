@@ -21,6 +21,13 @@ trait MovieAPI {
     produces = "text/plain",
     //response = classOf[Principal]
   )
+  @ApiImplicitParams(Array(
+    new ApiImplicitParam(
+      name = "movie name",
+      dataType = "string",
+      required = true,
+      paramType = "query"
+    )))
   @ApiResponses(Array(
     new ApiResponse(code = 200, message = "OK")))
   def route1: Route = complete("empty")

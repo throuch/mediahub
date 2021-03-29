@@ -10,6 +10,8 @@ trait TvSeriesRepositories  extends LazyLogging {
   //  - https://datasets.imdbws.com/title.episode.tsv.gz
   type TvSeriesId = String
 
+  import TvSeriesRepositories._
+
   //val db: mutable.Map[TvSeriesId, Principal]= mutable.HashMap()
   def getEpisodesRawStream = {
     akka.stream.scaladsl.Source.fromIterator(()=> parseEpisodes())
@@ -23,7 +25,7 @@ trait TvSeriesRepositories  extends LazyLogging {
   }
 
 
-  def parseEpisodes(): Iterator[(String,String, Int, Int)] = {
+  def parseEpisodes(): Iterator[Episodes] = {
     val stream =IOsource.fromInputStream(
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/title.episode.tsv.gz")))
 
@@ -31,8 +33,12 @@ trait TvSeriesRepositories  extends LazyLogging {
     stream.getLines().take(2).toList.foreach(s=>logger.debug(s))
 
     stream.getLines.drop(1).map(_.split("\t")).
-      map( { case a @ Array(tconst,parentTconst,seasonNumber,episodeNumber) =>
-        (tconst,parentTconst,seasonNumber.toInt,episodeNumber.toInt)})
+      collect( { case Array(tconst,parentTconst,seasonNumber,episodeNumber) if (seasonNumber != "\\N") && (episodeNumber != "\\N") =>
+        Episodes(tconst,parentTconst,seasonNumber.toInt,episodeNumber.toInt)})
 //    Iterator.empty
   }
+}
+
+object TvSeriesRepositories {
+  case class Episodes(tconst:String,parentTconst:String, seasonNumber:Int, episodeNumber :Int)
 }

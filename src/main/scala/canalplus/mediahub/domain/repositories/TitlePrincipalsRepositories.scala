@@ -6,6 +6,7 @@ import java.util.zip.GZIPInputStream
 import scala.io.{Source => IOsource}
 
 trait TitlePrincipalsRepositories extends LazyLogging {
+  import TitlePrincipalsRepositories._
   //  - https://datasets.imdbws.com/name.basics.tsv.gz
   //  - https://datasets.imdbws.com/title.principals.tsv.gz
   type MovieId = String
@@ -25,7 +26,7 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 //  }
 
 
-  def parseNameBasics(): Iterator[(String, Int, Option[Int], List[String], List[String])] = {
+  def parseNameBasics(): Iterator[NameBasics] = {
      val stream =IOsource.fromInputStream(
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/name.basics.tsv.gz")))
 
@@ -33,8 +34,8 @@ trait TitlePrincipalsRepositories extends LazyLogging {
     stream.getLines().take(2).toList.foreach(s=>logger.debug(s))
 
     stream.getLines.drop(1).map(_.split("\t")).
-       map( { case a @ Array(_,primaryName,birthYear,deathYear,primaryProfession,knownForTitles) =>
-         (primaryName, 1234 /*Integer.parseInt(birthYear)*/
+      collect( { case  Array(_,primaryName,birthYear,deathYear,primaryProfession,knownForTitles) if (birthYear != "\\N") =>
+         NameBasics(primaryName, birthYear.toInt
            , deathYear match { case "\\N" => None; case a => Some(a.toInt)},
            primaryProfession.split(",").toList, knownForTitles.split(",").toList)})
 
@@ -53,4 +54,9 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 //          primaryProfession.split(",").toList, knownForTitles.split(",").toList)})
 
   }
+}
+
+object TitlePrincipalsRepositories {
+  case class NameBasics(primaryName: String,birthYear: Int,deathYear:Option[Int],primaryProfession: List[String],knownForTitles:List[String])
+
 }

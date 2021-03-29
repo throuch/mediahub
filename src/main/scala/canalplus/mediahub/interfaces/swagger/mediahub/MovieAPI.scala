@@ -12,7 +12,7 @@ import javax.ws.rs.Path
 @Api(value = "MediaHub")
 @SwaggerDefinition(tags = Array(new Tag(name = "hello", description = "operations useful for debugging")))
 trait MovieAPI {
-  @Path("principalsForMovieName/{movie}")
+  @Path("principalsForMovieName")
   @ApiOperation(
     value = "A partir du nom d'un titre, retourne l'ensemble des membres de l’équipe de tournage",
     //nickname = "",
@@ -23,7 +23,7 @@ trait MovieAPI {
   )
   @ApiImplicitParams(Array(
     new ApiImplicitParam(
-      name = "movie name",
+      name = "moviename",
       dataType = "string",
       required = true,
       paramType = "query"

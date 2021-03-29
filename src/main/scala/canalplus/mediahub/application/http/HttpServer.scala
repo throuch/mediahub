@@ -35,8 +35,6 @@ class HttpServer(implicit system: ActorSystem, appContext: Module, m: Materializ
 
 
   implicit val ec: ExecutionContext = system.dispatcher
-  //implicit val m: ActorMaterializer = ActorMaterializer()
-
 
   val route =
     cors()(

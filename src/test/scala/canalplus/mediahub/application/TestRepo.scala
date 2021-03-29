@@ -25,6 +25,27 @@ class TestRepo extends WordSpec with Matchers {
     "load title principals" in {
 
       RepoInstance.parseNameBasics().foreach( _ ⇒ ())
+
+      //RepoInstance.parseTitlePrincipals.foreach( _ ⇒ ())
+    }
+  }
+
+  "Repository" should {
+    "provide titles refs " in {
+
+      println(RepoInstance.titleRefTable.getOrElse("Matrix", "Non trouvé"))
+      println(RepoInstance.titleRefTable.getOrElse("matrix", "Non trouvé"))
+      println(RepoInstance.titleRefTable.getOrElse("MATRIX", "Non trouvé"))
+
+      println(RepoInstance.titleRefTable.getOrElse("Carmencita","Non trouvé"))
+    }
+  }
+
+  "Repository" should {
+    "provide person refs " in {
+
+      RepoInstance.personRefTable.filterKeys(_.toLowerCase.contains("keanu")).foreach(x⇒println(x._2))
+
     }
   }
 

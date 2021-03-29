@@ -9,12 +9,13 @@ import canalplus.mediahub.domain.repositories.{TitlePrincipalsRepositories, TvSe
 trait MovieServiceImpl extends MovieService {
   self : TitlePrincipalsRepositories with TvSeriesRepositories =>
 
- //implicit val mat: Materializer
-
   override def principalsForMovieName(name: String): Source[MovieService.Principal, _] = {
     // TODO filter by movieName, combine
-    getTitlePrincipalsRawStream.filter(t=> t.knownForTitles.contains(name)).map(t =>
-      MovieService.Principal(t.primaryName, t.birthYear, t.deathYear, t.primaryProfession ))
+    logger.debug(s"Looking for movie $name ...")
+    val titleId = titleRefTable.get(name.trim.toLowerCase())
+    titleId.fold(Source.empty[MovieService.Principal])( tconst =>
+      getTitlePrincipalsRawStream.filter(t=> !t.knownForTitles.intersect(tconst).isEmpty).map(t =>
+      MovieService.Principal(t.primaryName, t.birthYear, t.deathYear, t.primaryProfession )))
   }
 
   override def tvSeriesWithGreatestNumberOfEpisodes(): Source[MovieService.TvSeries, _] = {

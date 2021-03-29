@@ -8,17 +8,25 @@ import scala.io.{Source => IOsource}
 trait TvSeriesRepositories  extends LazyLogging {
   //  - https://datasets.imdbws.com/title.basics.tsv.gz
   //  - https://datasets.imdbws.com/title.episode.tsv.gz
-  type TvSeriesId = String
+  //type TvSeriesId = String
 
   import TvSeriesRepositories._
 
   //val db: mutable.Map[TvSeriesId, Principal]= mutable.HashMap()
+
+  /**
+   *
+   * @return
+   */
   def getEpisodesRawStream = {
     akka.stream.scaladsl.Source.fromIterator(()=> parseEpisodes())
 // combine to have years and gender list
   }
 
-  //TODO
+  /**
+   * @TODO
+   * @return
+   */
   def getTitleBasicsRawStream = {
     akka.stream.scaladsl.Source.empty
 

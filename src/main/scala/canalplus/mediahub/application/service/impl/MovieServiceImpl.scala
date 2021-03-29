@@ -18,9 +18,14 @@ trait MovieServiceImpl extends MovieService {
       MovieService.Principal(t.primaryName, t.birthYear, t.deathYear, t.primaryProfession )))
   }
 
-  override def tvSeriesWithGreatestNumberOfEpisodes(): Source[MovieService.TvSeries, _] = {
-    // TODO groupby (parentTconst, season) => max by episode_num => SUM
 
-    getEpisodesRawStream.map( x=> TvSeries(x.parentTconst,1234,None,List()))
+  override def tvSeriesWithGreatestNumberOfEpisodes(): Source[MovieService.TvSeries, _] = {
+    // TODO groupby (parentTconst, season) => max by episode_num => groupby (parentTconst) => SUM max episode number
+//    val toto =parseEpisodes().toList.groupBy( t ⇒ (t.parentTconst, t.seasonNumber)).mapValues(_.maxBy(_.episodeNumber)).
+//      map( x⇒ (x._1._1, x._2)).toList.groupBy(t⇒ t._1).mapValues(x⇒ x.map(_._2.episodeNumber).sum).
+//      toList.sortBy(- _._2).take(10)
+
+    Source.empty
+
   }
 }

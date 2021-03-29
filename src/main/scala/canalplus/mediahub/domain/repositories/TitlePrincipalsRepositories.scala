@@ -6,11 +6,11 @@ import java.util.zip.GZIPInputStream
 import scala.io.{Source => IOsource}
 
 trait TitlePrincipalsRepositories extends LazyLogging {
-  type tconst = String
-  type nconst = String
-  type MovieName = String
 
   import TitlePrincipalsRepositories._
+  private[this] type MovieName = String
+  private[this] type tconst= String
+  private[this] type nconst= String
 
   //  - https://datasets.imdbws.com/name.basics.tsv.gz
 //  name.basics.tsv.gz – Contains the following information for names:

@@ -8,11 +8,10 @@ ThisBuild / version          := "0.1.0-SNAPSHOT"
 ThisBuild / organization     := "fr.canalplus"
 ThisBuild / organizationName := "canalplus"
 
+
 lazy val root = (project in file("."))
   .settings(
     name := "MediaHubDemo",
-    fork := true,
-    javaOptions := Seq("-Xmx3G", "-DADVERTISED_PORT=9000", "-DADVERTISED_HOST=localhost"),
     libraryDependencies ++= commonDependencies ++ swaggerDependencies ++ akkaDependencies,
     resolvers ++= Seq(
       Resolver.typesafeRepo("releases"),
@@ -21,8 +20,8 @@ lazy val root = (project in file("."))
 
   )
 
-// See https://www.scala-sbt.org/1.x/docs/Using-Sonatype.html for instructions on how to publish to Sonatype.
-
+Compile / run / fork := true
+run / javaOptions ++= Seq("-Xmx3G", "-DADVERTISED_PORT=9000", "-DADVERTISED_HOST=localhost")
 
 updateOptions := updateOptions.value.withGigahorse(false).withCachedResolution(true).withLatestSnapshots(false)
 

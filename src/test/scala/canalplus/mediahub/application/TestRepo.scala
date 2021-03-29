@@ -44,7 +44,7 @@ class TestRepo extends WordSpec with Matchers {
   "Repository" should {
     "provide person refs " in {
 
-      RepoInstance.personRefTable.filterKeys(_.toLowerCase.contains("keanu")).foreach(x⇒println(x._2))
+      //RepoInstance.personRefTable.filterKeys(_.toLowerCase.contains("keanu")).foreach(x⇒println(x._2))
 
     }
   }

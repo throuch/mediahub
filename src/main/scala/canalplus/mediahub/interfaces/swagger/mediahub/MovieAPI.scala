@@ -1,10 +1,9 @@
 package canalplus.mediahub.interfaces.swagger.mediahub
 
 
+import akka.http.scaladsl.server.Directives.complete
 import akka.http.scaladsl.server.Route
 import io.swagger.annotations._
-import akka.http.scaladsl.server.Directives.complete
-import canalplus.mediahub.interfaces.swagger.model.{Principal, TvSeries}
 
 import javax.ws.rs.Path
 

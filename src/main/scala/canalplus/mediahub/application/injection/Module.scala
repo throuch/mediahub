@@ -7,4 +7,3 @@ import canalplus.mediahub.domain.repositories.{TitlePrincipalsRepositories, TvSe
 trait Module extends MovieServiceImpl with TitlePrincipalsRepositories with TvSeriesRepositories
 
 
-

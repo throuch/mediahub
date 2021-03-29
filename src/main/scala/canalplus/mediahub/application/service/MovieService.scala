@@ -9,8 +9,5 @@ trait MovieService {
 
   def tvSeriesWithGreatestNumberOfEpisodes(): Source[TvSeries, _]
 
-  //def asyncPrincipalsForMovieName(name: String): Future[Seq[Principal]]
-
-  //def asyncTvSeriesWithGreatestNumberOfEpisodes(): Future[Seq[TvSeries]]
 
 }

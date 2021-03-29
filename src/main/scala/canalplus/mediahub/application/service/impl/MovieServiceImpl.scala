@@ -1,31 +1,24 @@
 package canalplus.mediahub.application.service.impl
 
-import akka.stream.Materializer
-
-import java.net.URI
-import java.nio.file.Path
-import java.nio.file.Paths
-import akka.stream.scaladsl.{Compression, FileIO, Sink, Source}
+import akka.stream.scaladsl.Source
 import canalplus.mediahub.application.service.MovieService
 import canalplus.mediahub.domain.entities.MovieService
-
-import scala.concurrent.{Await, ExecutionContext}
-import scala.concurrent.duration.DurationInt
+import canalplus.mediahub.domain.entities.MovieService.{Principal, TvSeries}
+import canalplus.mediahub.domain.repositories.{TitlePrincipalsRepositories, TvSeriesRepositories}
 
 trait MovieServiceImpl extends MovieService {
-//  - https://datasets.imdbws.com/name.basics.tsv.gz
-//  - https://datasets.imdbws.com/title.ratings.tsv.gz
-//
- implicit val mat: Materializer
+  self : TitlePrincipalsRepositories with TvSeriesRepositories =>
+
+ //implicit val mat: Materializer
 
   override def principalsForMovieName(name: String): Source[MovieService.Principal, _] = {
-    Source.empty
+    // TODO filter by movieName, combine
+    getTitlePrincipalsRawStream.filter(t=> t._5.contains(name)).map(t => MovieService.Principal(t._1, t._2, t._3,t._4 ))
   }
 
   override def tvSeriesWithGreatestNumberOfEpisodes(): Source[MovieService.TvSeries, _] = {
-    //val chemin = Paths.get(URI.create("https://datasets.imdbws.com/name.basics.tsv.gz"))
-    //Await.result(FileIO.fromPath(chemin).via(Compression.gunzip()).map(_.utf8String).runWith(Sink.head), 20.seconds)
+    // TODO groupby (parentTconst, season) => max by episode_num => SUM
 
-    Source.empty
+    getEpisodesRawStream.map( x=> TvSeries(x._2,1234,None,List()))
   }
 }

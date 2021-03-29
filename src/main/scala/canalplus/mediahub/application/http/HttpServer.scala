@@ -5,7 +5,7 @@ package canalplus.mediahub.application.http
 import akka.actor.{ActorRef, ActorSystem}
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.{HttpResponse, StatusCodes}
-import akka.http.scaladsl.server.{MalformedRequestContentRejection, RejectionHandler, Route}
+import akka.http.scaladsl.server.{MalformedRequestContentRejection, Rejection, RejectionHandler, Route}
 import akka.stream.{ActorMaterializer, Materializer}
 import canalplus.mediahub.application.http.movie.{MoviePrincipals, TopTenEpisodesCountSeries}
 import canalplus.mediahub.application.injection.Module
@@ -26,6 +26,7 @@ class HttpServer(implicit system: ActorSystem, appContext: Module, m: Materializ
         case _: MalformedRequestContentRejection => {
           complete(HttpResponse(StatusCodes.Forbidden, entity = "Invalid body !"))
         }
+        case e : Rejection => complete(HttpResponse(StatusCodes.ImATeapot, entity = e.toString))
       }
       .handleNotFound {
         complete(HttpResponse(StatusCodes.InternalServerError))

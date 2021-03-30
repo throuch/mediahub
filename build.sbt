@@ -20,8 +20,8 @@ lazy val root = (project in file("."))
 
   )
 
-Compile / run / fork := true
-run / javaOptions ++= Seq("-Xmx3G", "-DADVERTISED_PORT=9000", "-DADVERTISED_HOST=localhost")
+fork := true
+run / javaOptions ++= Seq("-Xmx3G", "-DADVERTISED_PORT=9000", "-DADVERTISED_HOST=localhost") // Ne marche pas
 
 updateOptions := updateOptions.value.withGigahorse(false).withCachedResolution(true).withLatestSnapshots(false)
 

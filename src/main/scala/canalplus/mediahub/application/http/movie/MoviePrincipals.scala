@@ -1,6 +1,7 @@
 package canalplus.mediahub.application.http.movie
 
 import akka.http.scaladsl.model.{ContentTypes, HttpEntity}
+import akka.http.scaladsl.server.StandardRoute
 import akka.util.ByteString
 import canalplus.mediahub.application.service.MovieService
 import thorn.core.application.http.HttpCommon

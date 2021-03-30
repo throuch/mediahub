@@ -48,6 +48,8 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 //    akka.stream.scaladsl.Source.empty
 //  }
 
+  private def normalizeMovieName(movie: String): String = movie.toLowerCase()
+
   /**
    *
    * @return entity NameBasics encapsulating : primaryName,birthYear,deathYear,primaryProfession,knownForTitles
@@ -58,9 +60,10 @@ trait TitlePrincipalsRepositories extends LazyLogging {
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/name.basics.tsv.gz")))
 
     // display header for debug
-    //stream.getLines().take(5).toList.foreach(s=>logger.debug(s))
+    val (debugIt, it) = stream.getLines.duplicate
+    debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
-    stream.getLines.drop(1).map(_.split("\t")).
+    it.drop(1).map(_.split("\t")). // <!> drop CSV header
       collect( { case  Array(_,primaryName,birthYear,deathYear,primaryProfession,knownForTitles) if birthYear != "\\N" =>
          NameBasics(primaryName, birthYear.toInt
            , deathYear match { case "\\N" => None; case a => Some(a.toInt)},
@@ -69,7 +72,7 @@ trait TitlePrincipalsRepositories extends LazyLogging {
   }
 
   /**
-   * Construit un tableau d'association des films avec comme clé le titre en minuscule et en valeur son ID IMDB
+   * Construit un tableau d'association des films avec comme clé le titre original & primaire en minuscule et en valeur son ID IMDB
    *
    * @return
    */
@@ -78,11 +81,12 @@ trait TitlePrincipalsRepositories extends LazyLogging {
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/title.basics.tsv.gz")))
 
     // display header for debug
-    //stream.getLines/*.filter(_.contains("movie"))*/.filter(x ⇒ x.contains("tt0102685") || x.contains("tt0102685")  || x.contains("tt0234215") || x.contains("tt0133093") || x.contains("tt0111257")).take(5000).toList.foreach(s=>logger.debug(s))
+    val (debugIt, it) = stream.getLines.duplicate
+    debugIt.filter(_.contains("movie")).take(10).toList.foreach(s=>logger.debug(s))
 
-    stream.reset().getLines.drop(1).map(_.split("\t")).
-      collect( { case  Array(id,titleType,primaryTitle,_,_,_,_,_,_)  if titleType == "movie" => primaryTitle.toLowerCase -> id
-        }).toList.groupBy(_._1).mapValues(_.map(_._2))
+    it.drop(1).map(_.split("\t")). // <!> drop CSV header
+      collect( { case  Array(id,titleType,primaryTitle,originalTitle,_,_,_,_,_)  if titleType == "movie" => List(normalizeMovieName(primaryTitle) -> id, normalizeMovieName(originalTitle) -> id)
+        }).flatten.toList.groupBy(_._1).mapValues(_.map(_._2))
  }
 
   lazy val titleRefTable : Map[MovieName, List[tconst]] = buildTitleRefTable()
@@ -93,8 +97,6 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 // }
 //
 //  lazy val personRefTable : Map[String, NameBasics] = buildPersonRefTable()
-
-
 
 
   /**

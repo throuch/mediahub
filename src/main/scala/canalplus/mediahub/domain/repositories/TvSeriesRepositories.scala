@@ -47,9 +47,10 @@ trait TvSeriesRepositories  extends  LazyLogging {
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/title.episode.tsv.gz")))
 
     // display header for debug
-    stream.getLines().take(2).toList.foreach(s=>logger.debug(s))
+    val (debugIt, it) = stream.getLines.duplicate
+    debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
-    stream.getLines.drop(1).map(_.split("\t")).
+    it.drop(1).map(_.split("\t")). // drop CSV header
       collect( { case Array(tconst,parentTconst,seasonNumber,episodeNumber) if (seasonNumber != "\\N") && (episodeNumber != "\\N") =>
         Episodes(tconst,parentTconst,seasonNumber.toInt,episodeNumber.toInt)})
   }
@@ -65,9 +66,11 @@ trait TvSeriesRepositories  extends  LazyLogging {
       new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/title.basics.tsv.gz")))
 
     // display header for debug
-    stream.getLines.filter(_.contains("tvserie")).take(5000).toList.foreach(s=>logger.debug(s))//.filter(x ⇒ x.contains("tt0102685") || x.contains("tt0102685")  || x.contains("tt0234215") || x.contains("tt0133093") || x.contains("tt0111257")).take(5000).toList.foreach(s=>logger.debug(s))
+    val (debugIt, it) = stream.getLines.duplicate
+    logger.debug("buildShowRefTable")
+    debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
-    stream.reset().getLines.drop(1).map(_.split("\t")).
+    it.drop(1).map(_.split("\t")). // drop CSV header
       collect( { case  Array(id,titleType,primaryTitle,_,_,startYear,endYear,_,genres)  if titleType == "tvserie"  =>
         id -> TvSeries(primaryTitle, startYear.toInt, endYear match { case "\\N" ⇒ None; case v ⇒ Some(v.toInt)}, genres.split(",").toList)
       }).toMap

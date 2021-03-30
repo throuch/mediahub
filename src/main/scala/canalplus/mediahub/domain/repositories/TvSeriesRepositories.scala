@@ -71,8 +71,8 @@ trait TvSeriesRepositories  extends  LazyLogging {
     debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // drop CSV header
-      collect( { case  Array(id,titleType,primaryTitle,_,_,startYear,endYear,_,genres)  if titleType == "tvserie"  =>
-        id -> TvSeries(primaryTitle, startYear.toInt, endYear match { case "\\N" ⇒ None; case v ⇒ Some(v.toInt)}, genres.split(",").toList)
+      collect( { case  Array(id,titleType,primaryTitle,_,_,startYear,endYear,_,genres)  /*if titleType == "tvseries"*/  =>
+        id -> TvSeries(primaryTitle, startYear match { case "\\N" ⇒ 0; case v ⇒ v.toInt}, endYear match { case "\\N" ⇒ None; case v ⇒ Some(v.toInt)}, genres.split(",").toList)
       }).toMap
   }
 

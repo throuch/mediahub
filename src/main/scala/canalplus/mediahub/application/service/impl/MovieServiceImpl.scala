@@ -25,7 +25,7 @@ trait MovieServiceImpl extends MovieService {
     // TODO groupby (parentTconst, season) => max by episode_num => groupby (parentTconst) => SUM max episode number
     val toto =parseEpisodes().toList.groupBy( t ⇒ (t.parentTconst, t.seasonNumber)).mapValues(_.maxBy(_.episodeNumber)).
       map( x⇒ (x._1._1, x._2)).toList.groupBy(t⇒ t._1).mapValues(x⇒ x.map(_._2.episodeNumber).sum).
-      toList.sortBy(- _._2).map(_._1).take(10)/*.map(x⇒showRefTableById.get(x)).flatten*/
+      toList.sortBy(- _._2).map(_._1).take(10).map(x⇒showRefTableById.get(x)).flatten
     logger.debug("Resultats:")
     logger.debug(s"count = ${toto.size}")
     toto.foreach(x⇒ logger.debug(x.toString))

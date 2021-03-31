@@ -51,8 +51,8 @@ trait TvSeriesRepositories  extends  LazyLogging {
     debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // drop CSV header
-      collect( { case Array(tconst,parentTconst,seasonNumber,episodeNumber) if (seasonNumber != "\\N") && (episodeNumber != "\\N") =>
-        Episodes(tconst,parentTconst,seasonNumber.toInt,episodeNumber.toInt)})
+      collect( { case Array(tconst,parentTconst,seasonNumber,episodeNumber) /*if (seasonNumber != "\\N") && (episodeNumber != "\\N")*/ =>
+        Episodes(tconst,parentTconst, if (seasonNumber=="\\N") 0 else seasonNumber.toInt,if (episodeNumber=="\\N") 0 else episodeNumber.toInt)})
   }
 
 
@@ -68,11 +68,11 @@ trait TvSeriesRepositories  extends  LazyLogging {
     // display header for debug
     val (debugIt, it) = stream.getLines.duplicate
     logger.debug("buildShowRefTable")
-    debugIt.take(10).toList.foreach(s=>logger.debug(s))
+    //debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // drop CSV header
-      collect( { case  Array(id,titleType,primaryTitle,_,_,startYear,endYear,_,genres)  /*if titleType == "tvseries"*/  =>
-        id -> TvSeries(primaryTitle, startYear match { case "\\N" ⇒ 0; case v ⇒ v.toInt}, endYear match { case "\\N" ⇒ None; case v ⇒ Some(v.toInt)}, genres.split(",").toList)
+      collect( { case a@ Array(id,titleType,primaryTitle,_,_,startYear,endYear,_,genres)  if titleType == "tvSeries" || titleType == "tvEpisodes" =>
+        /*logger.debug(a.mkString("{"," ", "}")); */ id -> TvSeries(primaryTitle, startYear match { case "\\N" ⇒ 0; case v ⇒ v.toInt}, endYear match { case "\\N" ⇒ None; case v ⇒ Some(v.toInt)}, genres.split(",").toList)
       }).toMap
   }
 

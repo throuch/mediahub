@@ -85,7 +85,8 @@ trait TitlePrincipalsRepositories extends LazyLogging {
     debugIt.filter(_.contains("movie")).take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // <!> drop CSV header
-      collect( { case  Array(id,titleType,primaryTitle,originalTitle,_,_,_,_,_)  if titleType == "movie" => List(normalizeMovieName(primaryTitle) -> id, normalizeMovieName(originalTitle) -> id)
+      collect( { case  a@ Array(id,titleType,primaryTitle,originalTitle,_,_,_,_,_)  if titleType == "movie" =>
+        /*logger.debug(a.mkString("{"," ", "}"));*/ List(normalizeMovieName(primaryTitle) -> id, normalizeMovieName(originalTitle) -> id)
         }).flatten.toList.groupBy(_._1).mapValues(_.map(_._2))
  }
 

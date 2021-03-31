@@ -42,6 +42,12 @@ class TestServices extends WordSpec with Matchers {
 
       println(resultMatrix)
 
+//      val resultSimpsons = RepoInstance.showRefTableById.get("the simpsons")
+//
+//      println(resultSimpsons)
+
+      println(RepoTVInstance.showRefTableById.values.filter(_.original.toLowerCase.contains("simpsons")))
+
       assertResult("tt0133093")(resultMatrix.fold("NOT FOUND")(_.head ))
 
     }
@@ -50,10 +56,7 @@ class TestServices extends WordSpec with Matchers {
   "Service" should {
     "return user expectations " in {
 
-
-      //ServiceToTest.principalsForMovieName("The Matrix")
       ServiceToTest.tvSeriesWithGreatestNumberOfEpisodes()
-
       println (s"taille de la base des series = ${RepoTVInstance.showRefTableById.size}")
     }
   }

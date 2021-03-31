@@ -12,7 +12,7 @@ pour télécharger les fichiers de resources sur IMDB (nécessite wget, à lance
 >* https://datasets.imdbws.com/name.basics.tsv.gz
 >* https://datasets.imdbws.com/title.principals.tsv.gz
 >* https://datasets.imdbws.com/title.basics.tsv.gz
->* https://datasets.imdbws.com/title.episode.tsv.g
+>* https://datasets.imdbws.com/title.episode.tsv.gz
  
 
 pour lancer le programme:

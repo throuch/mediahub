@@ -42,9 +42,8 @@ trait TitlePrincipalsRepositories extends LazyLogging {
    *
    * @return (primaryName,birthYear,deathYear,primaryProfession,knownForTitles)
    */
-  def getTitlePrincipalsRawStream = {
+  def getTitlePrincipalsRawStream =
     akka.stream.scaladsl.Source.fromIterator(()=> parseNameBasics())
-  }
 
   /**
    *
@@ -78,7 +77,7 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 
     // display header for debug
     val (debugIt, it) = stream.getLines.duplicate
-    debugIt.filter(_.contains("movie")).take(10).toList.foreach(s=>logger.debug(s))
+    //debugIt.filter(_.contains("movie")).take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // <!> drop CSV header
       collect( { case  a@ Array(id,titleType,primaryTitle,originalTitle,_,_,_,_,_)  if titleType == "movie" =>

@@ -12,8 +12,8 @@ class TestServices extends WordSpec with Matchers {
 
   object ServiceToTest extends MovieServiceImpl with  TvSeriesRepositories with TitlePrincipalsRepositories
 
-  "Repository" should {
-    "load data" in {
+  "TvSeriesRepositories" should {
+    "not throw exception when parsing episodes data" in {
 
       val it = RepoTVInstance.parseEpisodes()
 
@@ -23,11 +23,10 @@ class TestServices extends WordSpec with Matchers {
   }
 
 
-  "Repository" should {
-    "not throw exception when parsing titles data" in {
+  "TitlePrincipalsRepositories" should {
+    "not throw exception when parsing principals data" in {
 
       RepoInstance.parseNameBasics().foreach( _ ⇒ ())
-
 
     }
   }
@@ -35,14 +34,9 @@ class TestServices extends WordSpec with Matchers {
   "Repository" should {
     "provide titles refs " in {
 
-
       val resultMatrix = RepoInstance.titleRefTable.get("the matrix")
 
       println(resultMatrix)
-
-//      val resultSimpsons = RepoInstance.showRefTableById.get("the simpsons")
-//
-//      println(resultSimpsons)
 
       println(RepoTVInstance.showRefTableById.values.filter(_.original.toLowerCase.contains("simpsons")))
 
@@ -54,8 +48,8 @@ class TestServices extends WordSpec with Matchers {
   "Service" should {
     "return user expectations " in {
 
-      ServiceToTest.tvSeriesWithGreatestNumberOfEpisodes()
-      println (s"taille de la base des series = ${RepoTVInstance.showRefTableById.size}")
+          println(s"taille de la base des series = ${RepoTVInstance.showRefTableById.size}")
+         assertResult(204215 )(RepoTVInstance.showRefTableById.size)
     }
   }
 

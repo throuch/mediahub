@@ -2,9 +2,16 @@
 
 MediaHub demonstrator
 
-pour télécharger les fichiers de resources sur IMDB (à lancer avant tout run):
+pour télécharger les fichiers de resources sur IMDB (nécessite wget, à lancer avant tout run):
 
 ```src/main/resources/install.sh```
+
+_installation manuelle des ressources (optionel):_
+copier dans src/main/resources
+* https://datasets.imdbws.com/name.basics.tsv.gz
+* https://datasets.imdbws.com/title.principals.tsv.gz
+* https://datasets.imdbws.com/title.basics.tsv.gz
+* https://datasets.imdbws.com/title.episode.tsv.g
 
 pour lancer le programme:
 

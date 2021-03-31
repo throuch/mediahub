@@ -5,6 +5,9 @@ import com.typesafe.scalalogging.LazyLogging
 import java.util.zip.GZIPInputStream
 import scala.io.{Source => IOsource}
 
+/**
+ * This class will provide movie crew data
+ */
 trait TitlePrincipalsRepositories extends LazyLogging {
 
   import TitlePrincipalsRepositories._
@@ -43,13 +46,6 @@ trait TitlePrincipalsRepositories extends LazyLogging {
     akka.stream.scaladsl.Source.fromIterator(()=> parseNameBasics())
   }
 
-//  // TODO
-//  def getNameBasicsRawStream = {
-//    akka.stream.scaladsl.Source.empty
-//  }
-
-  private def normalizeMovieName(movie: String): String = movie.toLowerCase()
-
   /**
    *
    * @return entity NameBasics encapsulating : primaryName,birthYear,deathYear,primaryProfession,knownForTitles
@@ -57,11 +53,11 @@ trait TitlePrincipalsRepositories extends LazyLogging {
    */
   def parseNameBasics(): Iterator[NameBasics] = {
      val stream =IOsource.fromInputStream(
-      new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/name.basics.tsv.gz")))
+      new GZIPInputStream( getClass.getResourceAsStream("/name.basics.tsv.gz")))
 
     // display header for debug
     val (debugIt, it) = stream.getLines.duplicate
-    debugIt.take(10).toList.foreach(s=>logger.debug(s))
+    //debugIt.take(10).toList.foreach(s=>logger.debug(s))
 
     it.drop(1).map(_.split("\t")). // <!> drop CSV header
       collect( { case  Array(_,primaryName,birthYear,deathYear,primaryProfession,knownForTitles) if birthYear != "\\N" =>
@@ -86,36 +82,14 @@ trait TitlePrincipalsRepositories extends LazyLogging {
 
     it.drop(1).map(_.split("\t")). // <!> drop CSV header
       collect( { case  a@ Array(id,titleType,primaryTitle,originalTitle,_,_,_,_,_)  if titleType == "movie" =>
-        /*logger.debug(a.mkString("{"," ", "}"));*/ List(normalizeMovieName(primaryTitle) -> id, normalizeMovieName(originalTitle) -> id)
+         List(normalizeMovieName(primaryTitle) -> id, normalizeMovieName(originalTitle) -> id)
         }).flatten.toList.groupBy(_._1).mapValues(_.map(_._2))
  }
 
   lazy val titleRefTable : Map[MovieName, List[tconst]] = buildTitleRefTable()
 
+  private def normalizeMovieName(movie: String): String = movie.toLowerCase()
 
-//  def buildPersonRefTable(): Map[String, NameBasics] = {
-//    parseNameBasics().map( t ⇒ t.primaryName → t).toMap
-// }
-//
-//  lazy val personRefTable : Map[String, NameBasics] = buildPersonRefTable()
-
-
-  /**
-   *
-   * @return TBD
-   */
-//  def parseTitlePrincipals(): Iterator[Any] = {
-//    val stream =IOsource.fromInputStream(
-//      new GZIPInputStream( classOf[TitlePrincipalsRepositories].getResourceAsStream("/title.principals.tsv.gz")))
-//
-//    // display header for debug
-//    stream.getLines().take(2).toList.foreach(s=>logger.debug(s))
-//
-//    stream.getLines.drop(1).map(_.split("\t")).
-//      collect( { case  a @ Array(tconst,_,nconst,_,_,_)  =>
-//        Array(tconst, nconst)})
-//
-//  }
 }
 
 object TitlePrincipalsRepositories {

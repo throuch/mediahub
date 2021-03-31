@@ -18,19 +18,17 @@ class TestServices extends WordSpec with Matchers {
       val it = RepoTVInstance.parseEpisodes()
 
       it.foreach( _ ⇒ ())
-//      while( it.hasNext) {
-//        it.next()
-//      }
+
     }
   }
 
 
   "Repository" should {
-    "load title principals" in {
+    "not throw exception when parsing titles data" in {
 
       RepoInstance.parseNameBasics().foreach( _ ⇒ ())
 
-      //RepoInstance.parseTitlePrincipals.foreach( _ ⇒ ())
+
     }
   }
 

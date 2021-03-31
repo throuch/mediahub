@@ -12,8 +12,7 @@ class MoviePrincipals(movieService: MovieService)
                      (implicit val ec: ExecutionContext) extends HttpCommon  {
 
   val route =
-    path("principalsForMovieName" /*/ Segment*/) {
-      //pathEndOrSingleSlash {
+    path("principalsForMovieName" ) {
         parameters('moviename) {
           movieName: String =>
             get {
